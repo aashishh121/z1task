@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 function App() {
-  const [cats, setCats] = useState([]);
   const [breeds, setBreeds] = useState([]);
+  const [cats, setCats] = useState([]);
   const [selectedBreed, setSelectedBreed] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -22,17 +22,14 @@ function App() {
     setBreeds(data);
   };
 
-  const getCatImgs = async (breed = "", append = false) => {
+  const getCatImgs = async (breed = "", isAppend = false) => {
     setLoading(true);
-    let url = `https://api.thecatapi.com/v1/images/search?limit=10&api_key=${apiKey}`;
-    if (breed) {
-      url += `&breed_ids=${breed}`;
-    }
+    let url = `https://api.thecatapi.com/v1/images/search?limit=10&api_key=${apiKey}&breed_ids=${breed}`;
 
     const res = await fetch(url);
     const data = await res.json();
 
-    setCats((prevCats) => (append ? [...prevCats, ...data] : data));
+    setCats((prevCats) => (isAppend ? [...prevCats, ...data] : data));
     setLoading(false);
   };
 
